@@ -8,7 +8,6 @@ package restaurant.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import restaurant.DataAccessException;
@@ -18,14 +17,14 @@ import restaurant.db.accessor.DB_Generic;
  *
  * @author schereja
  */
-public class MenuItemDAO implements IMenuItem{
+public class MenuItemsDAO implements IMenuItemDAO{
 
     private DB_Generic db;
     
-    public MenuItemDAO(){ 
+    public MenuItemsDAO(){ 
     }
     
-    public MenuItemDAO(DB_Generic db){
+    public MenuItemsDAO(DB_Generic db){
         setDb(db);
     }
 
@@ -44,13 +43,14 @@ public class MenuItemDAO implements IMenuItem{
      */
     public void openLocalDbConnection() throws DataAccessException{
         try{
-            db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/Restaurant", "root", null);
+            db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/Restaurant", "root", null);
         } catch (IllegalArgumentException | ClassNotFoundException | SQLException ex) {
             throw new DataAccessException(ex.getMessage(), ex);
         }
         
         
     }
+    
     
     
     @Override
@@ -87,7 +87,7 @@ public class MenuItemDAO implements IMenuItem{
         return records;
     }
     public static void main(String[] args) throws DataAccessException {
-        MenuItemDAO midao = new MenuItemDAO(new DB_Generic());
+        MenuItemsDAO midao = new MenuItemsDAO(new DB_Generic());
         midao.openLocalDbConnection();
         List<MenuItem> records = midao.getAllMenuItems();
 

@@ -13,6 +13,6 @@ import restaurant.DataAccessException;
  *
  * @author schereja
  */
-public interface IMenuItem {
+public interface IMenuItemDAO {
     public abstract List<MenuItem> getAllMenuItems() throws DataAccessException;
-}
+            }
