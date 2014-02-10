@@ -39,4 +39,21 @@ public final class RestaurantService {
             System.out.println(items.getItemName() + " For $"+ items.getItemPrice());
         }
     }
+
+    public List<MenuItem> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<MenuItem> menuList) {
+        this.menuList = menuList;
+    }
+
+    public IMenuItemDAO getMenuItemDAO() {
+        return menuItemDAO;
+    }
+
+    public void setMenuItemDAO(IMenuItemDAO menuItemDAO) {
+        this.menuItemDAO = menuItemDAO;
+    }
+    
 }
