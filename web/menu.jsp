@@ -16,14 +16,21 @@
     <body>
         The following items are on the menu for today:
         <br />
+        <table id="menu" border="1">
+            <tr>
+                <td>Item Name</td>
+                <td>Item Price</td>
+            </tr>
         <%
          String msg = "";
         Object objMsg = request.getAttribute("menu");
         List<MenuItem> menuItems = (List)objMsg;
         for (MenuItem items : menuItems) {
-             msg += items.getItemName() + " For $"+ items.getItemPrice() + "<br />";
+             msg += "<tr><td>" + items.getItemName() + "</td><td>"+ items.getItemPrice() + "</td></tr>";
         }
             %>
             <%= msg %>
+         
+        </table>    
     </body>
 </html>
