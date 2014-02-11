@@ -32,14 +32,7 @@ public final class RestaurantService {
         menuList = menuItemDAO.getAllMenuItems();
     }
     
-    public static void main(String[] args) throws Exception {
-        String dao = "restaurant.dao.IMenuItemDAO";
-        RestaurantService rs = new RestaurantService(dao);
-        for (MenuItem items : rs.menuList) {
-            System.out.println(items.getItemName() + " For $"+ items.getItemPrice());
-        }
-    }
-
+    
     public List<MenuItem> getMenuList() {
         return menuList;
     }
@@ -54,6 +47,13 @@ public final class RestaurantService {
 
     public void setMenuItemDAO(IMenuItemDAO menuItemDAO) {
         this.menuItemDAO = menuItemDAO;
+    }
+    public static void main(String[] args) throws Exception {
+        String dao = "restaurant.dao.IMenuItemDAO";
+        RestaurantService rs = new RestaurantService(dao);
+        for (MenuItem items : rs.menuList) {
+            System.out.println(items.getItemName() + " For $"+ items.getItemPrice());
+        }
     }
     
 }

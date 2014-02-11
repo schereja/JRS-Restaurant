@@ -52,7 +52,7 @@ public class MenuItemsDAO implements IMenuItemDAO{
     }
     
     
-    
+    //Gets full list of menu items
     @Override
     public List<MenuItem> getAllMenuItems() throws DataAccessException{
          this.openLocalDbConnection();
@@ -85,6 +85,9 @@ public class MenuItemsDAO implements IMenuItemDAO{
         }
 
         return records;
+    }
+    public void addItemsToMenu(String itemName, double itemPrice) throws DataAccessException{
+        
     }
     public static void main(String[] args) throws DataAccessException {
         MenuItemsDAO midao = new MenuItemsDAO(new DB_Generic());
