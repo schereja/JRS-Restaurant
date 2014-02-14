@@ -8,19 +8,22 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import restaurant.service.RestaurantService;
 
 /**
  *
  * @author schereja
  */
-@WebServlet(name = "addItems", urlPatterns = {"/addItems"})
-public class addItems extends HttpServlet {
-
+@WebServlet(name = "AdminController", urlPatterns = {"/Admin"})
+public class AdminController extends HttpServlet {
+private static final String RESULT_PAGE = "result.jsp";
+private static final String ADMIN_TODO = "toDo";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,16 +37,19 @@ public class addItems extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet addItems</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet addItems at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+          String toDo = request.getParameter(ADMIN_TODO);
+          restaurant.service.RestaurantService rs = new RestaurantService();
+          if(toDo.equalsIgnoreCase("Delete")){
+              
+          }else if(toDo.equalsIgnoreCase("Update")){
+              
+          }else if(toDo.equalsIgnoreCase("Add")){
+              
+          }
+          
+          RequestDispatcher view =
+                request.getRequestDispatcher(RESULT_PAGE);
+        view.forward(request, response);
         }
     }
 

@@ -177,7 +177,12 @@ public class DB_Generic {
 		//System.out.println(finalSQL);
 		return conn_loc.prepareStatement(finalSQL);
 	}
-    
+    public void deleteRecord(String tableName, String whereField, Object whereValue){
+        
+    }
+    private PreparedStatement buildRemovalStatement(){
+        return null;
+    }
     public static void main(String[] args) throws IllegalArgumentException, SQLException, ClassNotFoundException, DataAccessException, Exception {
         DB_Generic db = new DB_Generic();
         db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/Restaurant", "root", null);

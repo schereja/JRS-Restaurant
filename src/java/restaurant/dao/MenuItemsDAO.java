@@ -50,7 +50,7 @@ public class MenuItemsDAO implements IMenuItemDAO{
         
         
     }
-    
+    //Add items to the menu
     
     //Gets full list of menu items
     @Override
