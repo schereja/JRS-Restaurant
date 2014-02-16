@@ -19,7 +19,7 @@ import restaurant.db.accessor.DB_Generic;
 public final class RestaurantService {
     private List<MenuItem> menuList;
     private restaurant.dao.IMenuItemDAO menuItemDAO;
-    
+    private DB_Generic db = new DB_Generic();
     public RestaurantService(){
         
     }
@@ -28,11 +28,11 @@ public final class RestaurantService {
     }
     
     public void initMenu(String dao) throws Exception{
-        menuItemDAO = new MenuItemsDAO(new DB_Generic());
+        menuItemDAO = new MenuItemsDAO(db);
         menuList = menuItemDAO.getAllMenuItems();
     }
     
-    
+   
     public List<MenuItem> getMenuList() {
         return menuList;
     }
