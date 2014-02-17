@@ -50,8 +50,18 @@ public class MenuItemsDAO implements IMenuItemDAO{
         
         
     }
-    //Add items to the menu
+    //Delete Item from Menu
+    public void deleteItemFromMenu(int item_id) throws DataAccessException{
+        this.openLocalDbConnection();
+        
+    }
     
+    //Add items to the menu
+    public void addItemToMenu(MenuItem mi) throws DataAccessException{
+        this.openLocalDbConnection();
+        
+        
+    }
     //Gets full list of menu items
     @Override
     public List<MenuItem> getAllMenuItems() throws DataAccessException{
