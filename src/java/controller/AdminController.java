@@ -8,6 +8,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -24,7 +25,7 @@ import restaurant.service.RestaurantService;
  */
 @WebServlet(name = "AdminController", urlPatterns = {"/Admin"})
 public class AdminController extends HttpServlet {
-private static final String RESULT_PAGE = "result.jsp";
+private static final String RESULT_PAGE = "admin.jsp";
 private static final String ADMIN_TODO = "toDo";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,15 +42,11 @@ private static final String ADMIN_TODO = "toDo";
         try (PrintWriter out = response.getWriter()) {
           String toDo = request.getParameter(ADMIN_TODO);
           restaurant.service.RestaurantService rs = new RestaurantService();
-          if(toDo.equalsIgnoreCase("Delete")){
-              
-          }else if(toDo.equalsIgnoreCase("Update")){
-              
-          }else if(toDo.equalsIgnoreCase("Add")){
-              
-          }
-          
-          RequestDispatcher view =
+           
+            List<restaurant.dao.MenuItem> menuItems = rs.getMenuList();
+            request.setAttribute("menu", menuItems);
+            
+            RequestDispatcher view =
                 request.getRequestDispatcher(RESULT_PAGE);
         view.forward(request, response);
         }
