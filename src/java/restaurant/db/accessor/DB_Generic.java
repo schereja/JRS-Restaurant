@@ -182,6 +182,56 @@ public class DB_Generic {
         return recordsDeleted;
     }
 
+    public int insertRecord(String tableName, List<String> whereField, List<Object> whereValues, Boolean closeConnection) throws SQLException {
+        PreparedStatement prepState = null;
+        int recordsDeleted = 0;
+
+        try {
+            //Build your insert statement   
+            prepState = buildInsertStatement(conn, tableName, whereField);
+        
+            final Iterator i = whereValues.iterator();
+            int index = 1;
+            while (i.hasNext()) {
+                final Object obj = i.next();
+                //Adding to this would allow you to add more than variable types.
+                if (obj instanceof String) {
+                    prepState.setString(index++, (String) obj);
+                } else if (obj instanceof Integer) {
+                    prepState.setInt(index++, ((Integer) obj).intValue());
+                } else if (obj instanceof Long) {
+                    prepState.setLong(index++, ((Long) obj).longValue());
+                } else if (obj instanceof Double) {
+                    prepState.setDouble(index++, ((Double) obj).doubleValue());
+                } else if (obj instanceof java.sql.Date) {
+                    prepState.setDate(index++, (java.sql.Date) obj);
+                } else if (obj instanceof Boolean) {
+                    prepState.setBoolean(index++, ((Boolean) obj).booleanValue());
+                } else {
+                    if (obj != null) {
+                        prepState.setObject(index++, obj);
+                    }
+                }
+            }
+
+            recordsDeleted = prepState.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            throw sqlException;
+        } finally {
+            try {
+                prepState.close();
+                if (closeConnection) {
+                    conn.close();
+                }
+            } catch (SQLException sqlExcept) {
+                throw sqlExcept;
+            }
+        }
+
+        return recordsDeleted;
+    }
+
     /**
      *
      *
@@ -222,21 +272,24 @@ public class DB_Generic {
         String finalSqlStatement = null;
         final StringBuffer sb = new StringBuffer("INSERT INTO ");
         String temp = null;
-        
+
         if (tableName != null) {
             sb.append(tableName);
-            sb.append(" ");
-            for(String col: cols){
+            sb.append(" (");
+            for (String col : cols) {
                 sb.append(col).append(" ,");
-            } 
-            temp = sb.substring(0,sb.length()-1);
-            sb.replace(0, sb.length(), temp);
-            for(int i = 0; i < cols.size();i++){
-                temp += " ?,"; 
             }
-            temp = temp.substring(0, temp.length()-1);
-            sb.append(temp);
+
+            temp = sb.substring(0, sb.length() - 1) + ") VALUES (";
+
+            sb.replace(0, sb.length(), temp);
+            for (int i = 0; i < cols.size(); i++) {
+                temp += " ?,";
+            }
+            temp = temp.substring(0, temp.length() - 1) + " )";
+            sb.replace(0, sb.length(), temp);
         }
+
         finalSqlStatement = sb.toString();
         return conn_loc.prepareStatement(finalSqlStatement);
     }
@@ -248,7 +301,11 @@ public class DB_Generic {
 
         columns.add("item_name");
         columns.add("item_price");
-        System.out.println(db.buildInsertStatement(db.conn, "Menu", columns));
+        List<Object> testValues = new ArrayList<>();
+        testValues.add("Toast");
+        testValues.add(2.99);
+        db.insertRecord("Menu", columns, testValues, Boolean.TRUE);
+
         // List<Map> rawData = db.findRecords("Menu", columns, "item_name", Boolean.TRUE);
         //List<Map> records = new ArrayList<>();
         // List newAddition = new ArrayList();
@@ -257,9 +314,9 @@ public class DB_Generic {
         // System.out.println(newAddition);
         // db.insertRecord("menu", columns, newAddition, true);
         //System.out.println(db.findRecords("Menu", columns, "item_name", Boolean.FALSE));
-        //db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/Restaurant", "root", null);
+        db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/Restaurant", "root", null);
         // System.out.println(db.deleteRecord("Menu", "item_name", "Fries",Boolean.TRUE));
         //db.openConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/Restaurant", "root", null);
-        //System.out.println(db.findRecords("Menu", columns, "item_name", Boolean.TRUE));
+        System.out.println(db.findRecords("Menu", columns, "item_name", Boolean.TRUE));
     }
 }

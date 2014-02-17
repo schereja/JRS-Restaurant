@@ -18,6 +18,10 @@ public class MenuItem {
     public MenuItem(){
         
     }
+    public MenuItem(String itemName, double itemPrice){
+        setItemName(itemName);
+        setItemPrice(itemPrice);
+    }
     public MenuItem(int itemId, String itemName, double itemPrice){
         setItemId(itemId);
         setItemName(itemName);

@@ -51,14 +51,27 @@ public class MenuItemsDAO implements IMenuItemDAO{
         
     }
     //Delete Item from Menu
-    public void deleteItemFromMenu(int item_id) throws DataAccessException{
+    @Override
+    public void deleteItemFromMenuById(int id) throws DataAccessException, SQLException{
         this.openLocalDbConnection();
+        db.deleteRecord("Menu", "item_id", id, Boolean.TRUE);
         
     }
     
     //Add items to the menu
-    public void addItemToMenu(MenuItem mi) throws DataAccessException{
+    @Override
+    public void addItemToMenu(MenuItem mi) throws DataAccessException, SQLException{
         this.openLocalDbConnection();
+        List<String> cols = new ArrayList<>();
+        cols.add("item_name");
+        cols.add("item_price");
+        
+        //Take Menu Item and convert to a List
+        List<Object> menuItem = new ArrayList<>();
+        menuItem.add(mi.getItemName());
+        menuItem.add(mi.getItemPrice());
+        
+        db.insertRecord("Menu", cols, menuItem, Boolean.TRUE);
         
         
     }
@@ -96,17 +109,15 @@ public class MenuItemsDAO implements IMenuItemDAO{
 
         return records;
     }
-    public void addItemsToMenu(String itemName, double itemPrice) throws DataAccessException{
-        
-    }
-    public static void main(String[] args) throws DataAccessException {
+    public static void main(String[] args) throws DataAccessException, SQLException {
         MenuItemsDAO midao = new MenuItemsDAO(new DB_Generic());
         midao.openLocalDbConnection();
+        MenuItem mi = new MenuItem(1, "Water", 0.00);
+        midao.addItemToMenu(mi);
         List<MenuItem> records = midao.getAllMenuItems();
-
         System.out.println("Found Menu Items...\n");
         for (MenuItem items : records) {
-            System.out.println(items.getItemName() + " For $"+ items.getItemPrice());
+            System.out.println(items.getItemName() + " For $"+ items.getItemPrice() + " Item ID: " + items.getItemId());
         }
     }
 }

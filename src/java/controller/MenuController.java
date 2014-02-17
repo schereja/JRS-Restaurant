@@ -39,8 +39,8 @@ private static final String RESULT_PAGE = "menu.jsp";
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            restaurant.service.RestaurantService rs = new RestaurantService("helo world");
-            rs.initMenu("hello world");
+            restaurant.service.RestaurantService rs = new RestaurantService();
+           
             List<restaurant.dao.MenuItem> menuItems = rs.getMenuList();
             request.setAttribute("menu", menuItems);
             RequestDispatcher view =

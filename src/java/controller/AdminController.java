@@ -8,6 +8,8 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +36,7 @@ private static final String ADMIN_TODO = "toDo";
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
           String toDo = request.getParameter(ADMIN_TODO);
@@ -65,7 +67,11 @@ private static final String ADMIN_TODO = "toDo";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    try {
         processRequest(request, response);
+    } catch (Exception ex) {
+        Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     /**
@@ -79,7 +85,11 @@ private static final String ADMIN_TODO = "toDo";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    try {
         processRequest(request, response);
+    } catch (Exception ex) {
+        Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     /**

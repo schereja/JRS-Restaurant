@@ -12,8 +12,6 @@
         <title>Admin Page</title>
     </head>
     <body>
-        <a href="Admin?toDo=add" id="addToMenu" value="addToMenu">Add to Menu</a>
-        <a href="delFromMenu.jsp" id="delFromMenu" value="delFromMenu">Delete from Menu</a>
-        <a href="Admin?toDo=update" id="updateItem" value="updateItem">Update Item on menu</a>
+        
     </body>
 </html>
